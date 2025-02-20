@@ -38,8 +38,20 @@ class BlinkyRepository @Inject constructor(
             .also { logSession = it.session }
     }
 
-    val loggedLedState: Flow<Boolean>
-        get() = blinky.ledState.onEach {
+    val loggedLed1State: Flow<Boolean>
+        get() = blinky.led1State.onEach {
+            // Although Timber log levels are the same as LogCat's, nRF Logger has its own.
+            // All standard log levels are mapped to the corresponding nRF Logger's levels:
+            // https://github.com/NordicSemiconductor/nRF-Logger-API/blob/f90d5834c46cc2057b6a9f39dcbb8f2f2dd45d56/log-timber/src/main/java/no/nordicsemi/android/log/timber/nRFLoggerTree.java#L104
+            // However, in order to log in nRF Logger on APPLICATION level, we need to use
+            // that level explicitly.
+            when(it) {
+                true -> Timber.log(LogContract.Log.Level.APPLICATION, "LED turned ON")
+                false -> Timber.log(LogContract.Log.Level.APPLICATION, "LED turned OFF")
+            }
+        }
+    val loggedLed2State: Flow<Boolean>
+        get() = blinky.led2State.onEach {
             // Although Timber log levels are the same as LogCat's, nRF Logger has its own.
             // All standard log levels are mapped to the corresponding nRF Logger's levels:
             // https://github.com/NordicSemiconductor/nRF-Logger-API/blob/f90d5834c46cc2057b6a9f39dcbb8f2f2dd45d56/log-timber/src/main/java/no/nordicsemi/android/log/timber/nRFLoggerTree.java#L104
@@ -51,8 +63,16 @@ class BlinkyRepository @Inject constructor(
             }
         }
 
-    val loggedButtonState: Flow<Boolean>
-        get() = blinky.buttonState.onEach {
+    val loggedButton1State: Flow<Boolean>
+        get() = blinky.button1State.onEach {
+            // The same applies here.
+            when(it) {
+                true -> Timber.log(LogContract.Log.Level.APPLICATION, "Button pressed")
+                false -> Timber.log(LogContract.Log.Level.APPLICATION, "Button released")
+            }
+        }
+    val loggedButton2State: Flow<Boolean>
+        get() = blinky.button2State.onEach {
             // The same applies here.
             when(it) {
                 true -> Timber.log(LogContract.Log.Level.APPLICATION, "Button pressed")

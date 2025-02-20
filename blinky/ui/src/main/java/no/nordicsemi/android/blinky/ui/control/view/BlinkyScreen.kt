@@ -59,13 +59,18 @@ internal fun BlinkyScreen(
                     }
                 }
                 Blinky.State.READY -> {
-                    val ledState by viewModel.ledState.collectAsStateWithLifecycle()
-                    val buttonState by viewModel.buttonState.collectAsStateWithLifecycle()
+                    val led1State by viewModel.led1State.collectAsStateWithLifecycle()
+                    val led2State by viewModel.led2State.collectAsStateWithLifecycle()
+                    val button1State by viewModel.button1State.collectAsStateWithLifecycle()
+                    val button2State by viewModel.button2State.collectAsStateWithLifecycle()
 
                     BlinkyControlView(
-                        ledState = ledState,
-                        buttonState = buttonState,
-                        onStateChanged = { viewModel.turnLed(it) },
+                        led1State = led1State,
+                        led2State = led2State,
+                        button1State = button1State,
+                        button2State = button2State,
+                        onState1Changed = { viewModel.turnLed1(it) },
+                        onState2Changed = { viewModel.turnLed2(it) },
                         modifier = Modifier
                             .widthIn(max = 460.dp)
                             .verticalScroll(rememberScrollState())

@@ -2,6 +2,7 @@ package no.nordicsemi.android.blinky.ui.control.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,44 +24,89 @@ import no.nordicsemi.android.blinky.ui.R
 
 @Composable
 internal fun LedControlView(
-    state: Boolean,
-    onStateChanged: (Boolean) -> Unit,
+    state1: Boolean,
+    onState1Changed: (Boolean) -> Unit,
+    state2: Boolean,
+    onState2Changed: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    OutlinedCard(
-        modifier = modifier
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Column(
-            modifier = Modifier
-                .clickable { onStateChanged(!state) }
-                .padding(16.dp)
+        OutlinedCard(
+            modifier = modifier
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                    .clickable { onState1Changed(!state1) }
+                    .padding(16.dp)
             ) {
-                Image(
-                    imageVector = Icons.Default.Lightbulb,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 16.dp),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
-                )
-                Text(
-                    text = stringResource(R.string.blinky_led),
-                    style = MaterialTheme.typography.headlineMedium,
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = Icons.Default.Lightbulb,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 16.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+                    )
+                    Text(
+                        text = stringResource(R.string.blinky_led1),
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.blinky_led1_descr),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(checked = state1, onCheckedChange = onState1Changed)
+                }
             }
-            Row(
+        }
+
+        OutlinedCard(
+            modifier = modifier
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                    .clickable { onState2Changed(!state2) }
+                    .padding(16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.blinky_led_descr),
-                    modifier = Modifier.weight(1f)
-                )
-                Switch(checked = state, onCheckedChange = onStateChanged)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = Icons.Default.Lightbulb,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 16.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+                    )
+                    Text(
+                        text = stringResource(R.string.blinky_led2),
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.blinky_led2_descr),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Switch(checked = state2, onCheckedChange = onState2Changed)
+                }
             }
         }
     }
@@ -70,8 +116,10 @@ internal fun LedControlView(
 @Preview
 private fun LecControlViewPreview() {
     LedControlView(
-        state = true,
-        onStateChanged = {},
+        state1 = true,
+        onState1Changed = {},
+        state2 = true,
+        onState2Changed = {},
         modifier = Modifier.padding(16.dp),
     )
 }

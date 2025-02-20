@@ -3,11 +3,16 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_retry">Retry</string>
 
-    <string name="blinky_led">LED</string>
-    <string name="blinky_led_descr">Switch to toggle the LED</string>
+    <string name="blinky_led1">LED1</string>
+    <string name="blinky_led1_descr">Switch to toggle the LED1</string>
+    <string name="blinky_led2">LED2</string>
+    <string name="blinky_led2_descr">Switch to toggle the LED2</string>
 
-    <string name="blinky_button">Button</string>
-    <string name="blinky_button_descr">The button state</string>
+    <string name="blinky_button1">Button1</string>
+    <string name="blinky_button1_descr">The button1 state</string>
+    <string name="blinky_button2">Button2</string>
+    <string name="blinky_button2_descr">The button2 state</string>
+
     <string name="blinky_on">ON</string>
     <string name="blinky_off">OFF</string>
 

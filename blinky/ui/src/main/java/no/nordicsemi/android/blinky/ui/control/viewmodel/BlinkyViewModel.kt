@@ -34,11 +34,30 @@ class BlinkyViewModel @Inject constructor(
 ) : AndroidViewModel(context as Application) {
     /** The connection state of the device. */
     val state = repository.state
-    /** The LED state. */
-    val ledState = repository.loggedLedState
+    /** The LED1 state. */
+    val led1State = repository.loggedLed1State
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
-    /** The button state. */
-    val buttonState = repository.loggedButtonState
+    /** The LED2 state. */
+    val led2State = repository.loggedLed2State
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+    /** The button1 state. */
+    val button1State = repository.loggedButton1State
+        .onEach { state ->
+            // Play a sound when the button is pressed.
+            try {
+                if (state) {
+                    val notification =
+                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                    val r = RingtoneManager.getRingtone(context, notification)
+                    r.play()
+                }
+            } catch (e: Exception) {
+                Timber.e("Failed to play notification sound")
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+    /** The button2 state. */
+    val button2State = repository.loggedButton2State
         .onEach { state ->
             // Play a sound when the button is pressed.
             try {
@@ -76,12 +95,24 @@ class BlinkyViewModel @Inject constructor(
      * Sends a command to the device to toggle the LED state.
      * @param on The new state of the LED.
      */
-    fun turnLed(on: Boolean) {
+    fun turnLed1(on: Boolean) {
         val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             // Just like above, when this method throws an exception, it will be caught by the
             // exception handler and ignored.
-            repository.turnLed(on)
+            repository.turnLed1(on)
+        }
+    }
+    /**
+     * Sends a command to the device to toggle the LED state.
+     * @param on The new state of the LED.
+     */
+    fun turnLed2(on: Boolean) {
+        val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            // Just like above, when this method throws an exception, it will be caught by the
+            // exception handler and ignored.
+            repository.turnLed2(on)
         }
     }
 

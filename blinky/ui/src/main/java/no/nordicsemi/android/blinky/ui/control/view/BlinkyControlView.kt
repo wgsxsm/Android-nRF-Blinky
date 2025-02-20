@@ -10,9 +10,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun BlinkyControlView(
-    ledState: Boolean,
-    buttonState: Boolean,
-    onStateChanged: (Boolean) -> Unit,
+    led1State: Boolean,
+    led2State: Boolean,
+    button1State: Boolean,
+    button2State: Boolean,
+    onState1Changed: (Boolean) -> Unit,
+    onState2Changed: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -20,12 +23,15 @@ internal fun BlinkyControlView(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         LedControlView(
-            state = ledState,
-            onStateChanged = onStateChanged,
+            state1 = led1State,
+            onState1Changed = onState1Changed,
+            state2 = led2State,
+            onState2Changed = onState2Changed,
         )
 
         ButtonControlView(
-            state = buttonState
+            state1 = button1State,
+            state2 = button2State,
         )
     }
 }
@@ -34,9 +40,12 @@ internal fun BlinkyControlView(
 @Composable
 private fun BlinkyControlViewPreview() {
     BlinkyControlView(
-        ledState = true,
-        buttonState = true,
-        onStateChanged = {},
+        led1State = true,
+        led2State = true,
+        button1State = true,
+        button2State = true,
+        onState1Changed = {},
+        onState2Changed = {},
         modifier = Modifier.padding(16.dp),
     )
 }

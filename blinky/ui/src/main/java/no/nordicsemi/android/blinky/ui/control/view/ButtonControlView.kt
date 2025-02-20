@@ -1,6 +1,7 @@
 package no.nordicsemi.android.blinky.ui.control.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,45 +22,91 @@ import no.nordicsemi.android.blinky.ui.R
 
 @Composable
 internal fun ButtonControlView(
-    state: Boolean,
+    state1: Boolean,
+    state2: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    OutlinedCard(
-        modifier = modifier
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
+        OutlinedCard(
+            modifier = modifier
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                    .padding(16.dp)
             ) {
-                Image(
-                    imageVector = Icons.Default.RadioButtonChecked,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 16.dp),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
-                )
-                Text(
-                    text = stringResource(R.string.blinky_button),
-                    style = MaterialTheme.typography.headlineMedium,
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = Icons.Default.RadioButtonChecked,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 16.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+                    )
+                    Text(
+                        text = stringResource(R.string.blinky_button1),
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.blinky_button1_descr),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = if (state1) stringResource(R.string.blinky_on) else stringResource(R.string.blinky_off),
+                    )
+                }
             }
-            Row(
+        }
+
+        OutlinedCard(
+            modifier = modifier
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                    .padding(16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.blinky_button_descr),
-                    modifier = Modifier.weight(1f)
-                )
-                Text(
-                    text = if (state) stringResource(R.string.blinky_on) else stringResource(R.string.blinky_off),
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Image(
+                        imageVector = Icons.Default.RadioButtonChecked,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 16.dp),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+                    )
+                    Text(
+                        text = stringResource(R.string.blinky_button2),
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.blinky_button2_descr),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = if (state2) stringResource(R.string.blinky_on) else stringResource(R.string.blinky_off),
+                    )
+                }
             }
         }
     }
@@ -69,7 +116,8 @@ internal fun ButtonControlView(
 @Preview
 private fun ButtonControlViewPreview() {
     ButtonControlView(
-        state = true,
+        state1 = true,
+        state2 = true,
         modifier = Modifier.padding(16.dp),
     )
 }
